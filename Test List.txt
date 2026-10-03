@@ -1,31 +1,29 @@
 SPACE ATTACK WEB - TEST LIST
 
-No game exists yet. All gameplay cases below are NOT IMPLEMENTED.
-These are candidate coverage areas, not approved requirements. Producer defines
-the expected behavior when each mechanic is requested. QA adds cases for every
-new feature before testing, and retains prior results in implementation records.
+SA-001 is implemented. Required cases below were executed by independent QA.
+Producer criteria and detailed evidence appear in the SA-001 records below.
 
 PLANNED GAMEPLAY COVERAGE
-T001 | Load/start game and enter playable state | NOT IMPLEMENTED
-T002 | Move player using supported controls | NOT IMPLEMENTED
-T003 | Keep player within playfield boundaries | NOT IMPLEMENTED
-T004 | Shoot; verify direction, cadence, and simultaneous movement | NOT IMPLEMENTED
-T005 | Projectile hits enemy; resolve collision once | NOT IMPLEMENTED
-T006 | Enemy movement, spawning, and wave progression | NOT IMPLEMENTED
-T007 | Enemy attacks or collisions damage player as specified | NOT IMPLEMENTED
-T008 | Health/energy display matches damage and limits | NOT IMPLEMENTED
-T009 | Lives, death, and respawn behave as specified | NOT IMPLEMENTED
-T010 | Score changes correctly; HUD remains synchronized | NOT IMPLEMENTED
-T011 | Game over stops gameplay; restart resets session state | NOT IMPLEMENTED
-T012 | Pause/resume and loss of focus behave as specified | NOT IMPLEMENTED
-T013 | Keyboard input does not unintentionally scroll the page | NOT IMPLEMENTED
-T014 | Supported viewport sizes keep controls/HUD usable | NOT IMPLEMENTED
-T015 | Touch controls, if requested, support movement and shooting | NOT IMPLEMENTED
-T016 | Supported browsers load and play without runtime errors | NOT IMPLEMENTED
-T017 | Gameplay remains responsive under expected enemy/projectile load | NOT IMPLEMENTED
-T018 | Audio/mute settings, if requested, behave as specified | NOT IMPLEMENTED
-T019 | Win condition, if requested, completes correctly | NOT IMPLEMENTED
-T020 | Repeated restarts do not duplicate input handlers or entities | NOT IMPLEMENTED
+T001 | Load/start game and enter playable state | PASS
+T002 | Move player using supported controls | PASS
+T003 | Keep player within playfield boundaries | PASS
+T004 | Shoot; verify direction, cadence, and simultaneous movement | PASS
+T005 | Projectile hits enemy; resolve collision once | PASS
+T006 | Enemy movement, spawning, and wave progression | PASS
+T007 | Enemy attacks or collisions damage player as specified | PASS
+T008 | Health/energy display matches damage and limits | PASS
+T009 | Lives, death, and respawn behave as specified | NOT APPLICABLE
+T010 | Score changes correctly; HUD remains synchronized | PASS
+T011 | Game over stops gameplay; restart resets session state | PASS
+T012 | Pause/resume and loss of focus behave as specified | PASS
+T013 | Keyboard input does not unintentionally scroll the page | PASS
+T014 | Supported viewport sizes keep controls/HUD usable | PASS
+T015 | Touch controls, if requested, support movement and shooting | NOT APPLICABLE
+T016 | Supported browsers load and play without runtime errors | PASS
+T017 | Gameplay remains responsive under expected enemy/projectile load | PASS
+T018 | Audio/mute settings, if requested, behave as specified | PASS (SA-003)
+T019 | Win condition, if requested, completes correctly | NOT APPLICABLE
+T020 | Repeated restarts do not duplicate input handlers or entities | PASS
 
 TEST RECORD FORMAT (append a record for each executed case)
 Test ID / title:
@@ -42,3 +40,443 @@ Evidence (command output, screenshot path, or observed behavior):
 Defect ID / severity / regression impact (if applicable):
 Retest result and evidence (if applicable):
 
+
+SA-001 / QA cases registered before execution
+Build: Programmer SHA256 snapshot recorded in Implementation Log.txt.
+Date: 2026-10-02 / independent QA role
+Required: T001 AC01 ready/start button/Enter/no idle simulation; T002-T004,T013 AC02 WASD/arrows/all bounds/hold fire plus move/no scrolling; T005,T010 AC03 single collision +100/HUD; T006 AC04 waves >=3/two scaling parameters/escape; T007-T008 AC05 collision damage/invulnerability/zero clamp/feedback; T011,T020 AC06 game over freezes/accurate score/button and Enter/three resets; T012 AC07 blur pauses and clears keys/resume; T014 AC08 1440x900 and 800x600 visual usability/resize; T016-T017 AC09 runtime errors/assets/responsiveness/cleanup; README AC10 reliable direct/local launch.
+Preconditions: Local server active, real desktop browser, identifiable build.
+Expected: All brief acceptance criteria satisfied. Initial status: NOT RUN.
+T009,T015,T018,T019: NOT APPLICABLE (health only, no respawn/touch/audio/win endpoint in scope).
+
+Test ID / title: T001
+Implementation ID / acceptance criterion: SA-001 / AC01
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Load HTTP entry, observe idle, mouse-click launch; Enter exercised during resets
+Expected result: briefs/SA-001.md AC01 observable criteria.
+Actual result: READY health100 score0 remained inactive; button starts PLAYING
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T002
+Implementation ID / acceptance criterion: SA-001 / AC02
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Dispatch WASD and all arrows in Edge
+Expected result: briefs/SA-001.md AC02 observable criteria.
+Actual result: Keyboard movement worked in both sets
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T003
+Implementation ID / acceptance criterion: SA-001 / AC02
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Hold arrows at each edge for 3.1 seconds
+Expected result: briefs/SA-001.md AC02 observable criteria.
+Actual result: Player coordinates clamped inside playfield
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T004
+Implementation ID / acceptance criterion: SA-001 / AC02
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Hold D+Space 700ms; supplemental fixed-dt cadence assertions
+Expected result: briefs/SA-001.md AC02 observable criteria.
+Actual result: Moved while firing >=3 shots; fixed cadence state checks pass
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T005
+Implementation ID / acceptance criterion: SA-001 / AC03
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Inject one enemy above player and dispatch Space in real animation loop; supplemental duplicate projectile check
+Expected result: briefs/SA-001.md AC03 observable criteria.
+Actual result: One destruction awarded exactly100
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T006
+Implementation ID / acceptance criterion: SA-001 / AC04
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Escape fixture advances waves1-3; 50s original-timing session with held fire and protection fixture
+Expected result: briefs/SA-001.md AC04 observable criteria.
+Actual result: Natural session reached wave3; count9->13 speed27->37 base interval1.61->1.43; no stall
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T007
+Implementation ID / acceptance criterion: SA-001 / AC05
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Inject colliding hostile bullet in actual browser; repeat inside immunity
+Expected result: briefs/SA-001.md AC05 observable criteria.
+Actual result: Health100->80; repeated hit remained80; invulnerable timer and particles present
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T008
+Implementation ID / acceptance criterion: SA-001 / AC05
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Read HUD at80 and0; visual screenshot and state checks
+Expected result: briefs/SA-001.md AC05 observable criteria.
+Actual result: HUD health matched clamped state; animated bar settles over150ms
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T010
+Implementation ID / acceptance criterion: SA-001 / AC03
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Observe collision score and HUD; gameover700 fixture
+Expected result: briefs/SA-001.md AC03 observable criteria.
+Actual result: HUD000100 after kill; final score000700
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T011
+Implementation ID / acceptance criterion: SA-001 / AC06
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Apply separated damage to zero; snapshot twice; click/Enter restart
+Expected result: briefs/SA-001.md AC06 observable criteria.
+Actual result: OVER health0; frozen entities/state; reset health100 score0 wave1
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T012
+Implementation ID / acceptance criterion: SA-001 / AC07
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Dispatch blur; inspect keys/state; wait; Enter resume
+Expected result: briefs/SA-001.md AC07 observable criteria.
+Actual result: PAUSED clears keys; snapshots unchanged while paused; resumes safely
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T013
+Implementation ID / acceptance criterion: SA-001 / AC02
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Dispatch arrows/Space while playing; inspect scrollY
+Expected result: briefs/SA-001.md AC02 observable criteria.
+Actual result: scrollY0, no page scrolling
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T014
+Implementation ID / acceptance criterion: SA-001 / AC08
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Resize1440x900->800x600; capture and visually inspect ready/play/over
+Expected result: briefs/SA-001.md AC08 observable criteria.
+Actual result: All HUD/buttons/controls visible and usable; player remains in bounds
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T016
+Implementation ID / acceptance criterion: SA-001 / AC09
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Enable CDP runtime/network events across full session
+Expected result: briefs/SA-001.md AC09 observable criteria.
+Actual result: Zero runtime exceptions and zero loading failures
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T017
+Implementation ID / acceptance criterion: SA-001 / AC09
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: 50second natural movement with fire/protection fixture; inspect entity counts
+Expected result: briefs/SA-001.md AC09 observable criteria.
+Actual result: Wave3 shots4 hostile11 particles0; responsive and bounded
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: T020
+Implementation ID / acceptance criterion: SA-001 / AC06
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Three successive game-over resets via button/Enter/button
+Expected result: briefs/SA-001.md AC06 observable criteria.
+Actual result: Each resets9 enemies, score0 health100 wave1 zero shots/hostile/keys; no duplicate behavior
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+Test ID / title: README
+Implementation ID / acceptance criterion: SA-001 / AC10
+Build: SHA256 snapshot in Implementation Log.txt, independently matched.
+Date / tester: 2026-10-02 / independent QA agent
+Environment: Windows Edge154.0.4258.48 headless real browser;1440x900,800x600;CDP mouse/keyboard.
+Preconditions: local server8765 running; game loaded.
+Steps: Read documented launch/controls and use supplied HTTP launch
+Expected result: briefs/SA-001.md AC10 observable criteria.
+Actual result: HTTP entry200 and playable; no external hosting needed
+Status: PASS
+Evidence: tools/browser-qa.cjs; qa-evidence/browser-report.json; qa-evidence/*.png; tools/check-game.cjs output PASS.
+Defect: none.
+
+QA limitation: Browser automation uses explicit deterministic collision/escape/death fixtures. Endurance uses protection fixture but original enemy motion/wave/frame timing. Testing was Edge desktop only. T009,T015,T018,T019 excluded by brief (health only; no touch/audio/win endpoint).
+
+SA-002 / QA registration BEFORE execution
+Build: Programmer SHA256 snapshot in Implementation Log.txt; pending independent match.
+Date/tester: 2026-10-02 independent QA. Environment planned Edge154 CDP real browser;1440x900/800x600.
+SA002-01 AC01/T002,T003,T004,T013: keyboard horizontal/ignored vertical/mixed speed/bounds/fire/page scroll; truthful legend/readme.
+SA002-02 AC02/T006,T014: formation homeY stability and no HUD overlap, both sizes.
+SA002-03 AC03/T006: observe normal scheduling all9 slots max3, stagger and sine excursions.
+SA002-04 AC04/T007,T008: aimed vector, real bullet travel/damage/immunity.
+SA002-05 AC05/T006,T010: survivor home return preserves count/score, destroy fleet advances.
+SA002-06 AC06/T006,T017: normal scheduler extended natural play tostage3; strictly increasing112/124/136/340/352 speeds, bounded entities.
+SA002-07 AC07/T005,T008,T010,T011,T012,T020: collision score/contact health, zerohealth freeze, focuspause timers+keys, button/Enter3restarts.
+SA002-08 AC08/T014,T016: visuals/resize/live divers/home slots/bottom player, errors/assets, launch.
+Each initial status NOT RUN. Historical SA001 results preserved.
+
+Test ID / title: SA002-01
+Implementation ID / acceptance criterion: SA-002 / AC01 / T002,T003,T004,T013
+Build: SHA256 game.js7D91C284A1FBBB8BDCC793E422DD1DD4E0B48AB8C6F43069550BC5379C977FBB; other hashes matched Programmer handoff.
+Date / tester: 2026-10-02 / independent QA role
+Environment: Windows Edge154.0.4258.48 headless actual browser, CDP keyboard/mouse;1440x900 and800x600.
+Preconditions: Local HTTP server8765; cache disabled; READY loaded.
+Steps: Real keyboard W/S/Up/Down, D with/without W plus Space, A/arrows and boundary holds; inspect page scroll and controls
+Expected result: briefs/SA-002.md AC01 / T002,T003,T004,T013 criteria.
+Actual result: Bottom Y unchanged; plain/mixed displacement 79.98000000000002/80.01000000000056 px; no slowdown beyond frame tolerance; firing while moving; clamps; scroll0; page/README horizontal controls
+Status: PASS
+Evidence: tools/browser-qa-sa002.cjs; qa-evidence/SA-002/browser-report.json; screenshots in qa-evidence/SA-002; Node tools/check-game.cjs PASS.
+Defect: None.
+
+Test ID / title: SA002-02
+Implementation ID / acceptance criterion: SA-002 / AC02 / T006,T014
+Build: SHA256 game.js7D91C284A1FBBB8BDCC793E422DD1DD4E0B48AB8C6F43069550BC5379C977FBB; other hashes matched Programmer handoff.
+Date / tester: 2026-10-02 / independent QA role
+Environment: Windows Edge154.0.4258.48 headless actual browser, CDP keyboard/mouse;1440x900 and800x600.
+Preconditions: Local HTTP server8765; cache disabled; READY loaded.
+Steps: Start formation, sample before first departure, inspect both screenshots
+Expected result: briefs/SA-002.md AC02 / T006,T014 criteria.
+Actual result: Stable120/168 homeY, separated upper rows below HUD; no downward formation drift or clipping
+Status: PASS
+Evidence: tools/browser-qa-sa002.cjs; qa-evidence/SA-002/browser-report.json; screenshots in qa-evidence/SA-002; Node tools/check-game.cjs PASS.
+Defect: None.
+
+Test ID / title: SA002-03
+Implementation ID / acceptance criterion: SA-002 / AC03 / T006
+Build: SHA256 game.js7D91C284A1FBBB8BDCC793E422DD1DD4E0B48AB8C6F43069550BC5379C977FBB; other hashes matched Programmer handoff.
+Date / tester: 2026-10-02 / independent QA role
+Environment: Windows Edge154.0.4258.48 headless actual browser, CDP keyboard/mouse;1440x900 and800x600.
+Preconditions: Local HTTP server8765; cache disabled; READY loaded.
+Steps: 24second original-timing scheduler observation without fire, protection fixture, sample every100ms
+Expected result: briefs/SA-002.md AC03 / T006 criteria.
+Actual result: All9 slots selected, max3 diver bound held, departures staggered >700ms, slot0 lateral excursions <-30 and >30px; returns observed
+Status: PASS
+Evidence: tools/browser-qa-sa002.cjs; qa-evidence/SA-002/browser-report.json; screenshots in qa-evidence/SA-002; Node tools/check-game.cjs PASS.
+Defect: None.
+
+Test ID / title: SA002-04
+Implementation ID / acceptance criterion: SA-002 / AC04 / T007,T008
+Build: SHA256 game.js7D91C284A1FBBB8BDCC793E422DD1DD4E0B48AB8C6F43069550BC5379C977FBB; other hashes matched Programmer handoff.
+Date / tester: 2026-10-02 / independent QA role
+Environment: Windows Edge154.0.4258.48 headless actual browser, CDP keyboard/mouse;1440x900 and800x600.
+Preconditions: Local HTTP server8765; cache disabled; READY loaded.
+Steps: Isolate diver emission; compare velocity against current target; observe bullet travel200ms; real-frame hostile collisions twice
+Expected result: briefs/SA-002.md AC04 / T007,T008 criteria.
+Actual result: Cross product near0 and positive dot, travel>15px; damage100->80 and second within immunity stays80
+Status: PASS
+Evidence: tools/browser-qa-sa002.cjs; qa-evidence/SA-002/browser-report.json; screenshots in qa-evidence/SA-002; Node tools/check-game.cjs PASS.
+Defect: None.
+
+Test ID / title: SA002-05
+Implementation ID / acceptance criterion: SA-002 / AC05 / T006,T010
+Build: SHA256 game.js7D91C284A1FBBB8BDCC793E422DD1DD4E0B48AB8C6F43069550BC5379C977FBB; other hashes matched Programmer handoff.
+Date / tester: 2026-10-02 / independent QA role
+Environment: Windows Edge154.0.4258.48 headless actual browser, CDP keyboard/mouse;1440x900 and800x600.
+Preconditions: Local HTTP server8765; cache disabled; READY loaded.
+Steps: Observe24second surviving fleet and returns; natural keyboard fire clears stages in extended session
+Expected result: briefs/SA-002.md AC05 / T006,T010 criteria.
+Actual result: Survivor returns retained9 enemies/score0/health100/wave1; stages advance only after destruction during normal firing
+Status: PASS
+Evidence: tools/browser-qa-sa002.cjs; qa-evidence/SA-002/browser-report.json; screenshots in qa-evidence/SA-002; Node tools/check-game.cjs PASS.
+Defect: None.
+
+Test ID / title: SA002-06
+Implementation ID / acceptance criterion: SA-002 / AC06 / T006,T017
+Build: SHA256 game.js7D91C284A1FBBB8BDCC793E422DD1DD4E0B48AB8C6F43069550BC5379C977FBB; other hashes matched Programmer handoff.
+Date / tester: 2026-10-02 / independent QA role
+Environment: Windows Edge154.0.4258.48 headless actual browser, CDP keyboard/mouse;1440x900 and800x600.
+Preconditions: Local HTTP server8765; cache disabled; READY loaded.
+Steps: Original-timing natural scheduler, protection fixture and key-driven auto-aim; no fleet removal/time acceleration; inspect late-stage speeds
+Expected result: briefs/SA-002.md AC06 / T006,T017 criteria.
+Actual result: Natural stages 1->2->3 in 17066ms; speeds112,124,136,340,352; maximum hostile4 shots5
+Status: PASS
+Evidence: tools/browser-qa-sa002.cjs; qa-evidence/SA-002/browser-report.json; screenshots in qa-evidence/SA-002; Node tools/check-game.cjs PASS.
+Defect: None.
+
+Test ID / title: SA002-07
+Implementation ID / acceptance criterion: SA-002 / AC07 / T005,T008,T010,T011,T012,T020
+Build: SHA256 game.js7D91C284A1FBBB8BDCC793E422DD1DD4E0B48AB8C6F43069550BC5379C977FBB; other hashes matched Programmer handoff.
+Date / tester: 2026-10-02 / independent QA role
+Environment: Windows Edge154.0.4258.48 headless actual browser, CDP keyboard/mouse;1440x900 and800x600.
+Preconditions: Local HTTP server8765; cache disabled; READY loaded.
+Steps: Two overlapping shot collision fixture, actual contact collision; blur with heldkey; compare frozen timers/entities; Enter resume; separated damage and3 button/Enter resets
+Expected result: briefs/SA-002.md AC07 / T005,T008,T010,T011,T012,T020 criteria.
+Actual result: One destruction score100, contact damage20, health clamps0, gameover freezes, pause clears keys and freezes dive timers/progress, clean3 resets wave1 health100 score0 no dive/shot/hostile state
+Status: PASS
+Evidence: tools/browser-qa-sa002.cjs; qa-evidence/SA-002/browser-report.json; screenshots in qa-evidence/SA-002; Node tools/check-game.cjs PASS.
+Defect: None.
+
+Test ID / title: SA002-08
+Implementation ID / acceptance criterion: SA-002 / AC08 / T014,T016
+Build: SHA256 game.js7D91C284A1FBBB8BDCC793E422DD1DD4E0B48AB8C6F43069550BC5379C977FBB; other hashes matched Programmer handoff.
+Date / tester: 2026-10-02 / independent QA role
+Environment: Windows Edge154.0.4258.48 headless actual browser, CDP keyboard/mouse;1440x900 and800x600.
+Preconditions: Local HTTP server8765; cache disabled; READY loaded.
+Steps: Cache-disabled HTTP launch; resize live session800x600->1440x900; visual inspection screenshots, CDP errors/network
+Expected result: briefs/SA-002.md AC08 / T014,T016 criteria.
+Actual result: Existing neon design preserved (stylesheet unchanged); bottom player/home slots/divers resized safely; readable HUD/buttons/controls; zero runtime/load errors; launch works
+Status: PASS
+Evidence: tools/browser-qa-sa002.cjs; qa-evidence/SA-002/browser-report.json; screenshots in qa-evidence/SA-002; Node tools/check-game.cjs PASS.
+Defect: None.
+
+SA-002 limitations: Edge desktop tested. Protection fixture used for scheduler/endurance; isolated emission/collision/contact/health/death fixtures used. Natural stage progression uses actual keyboard auto-aim with normal scheduling and frame timing, no artificial fleet destruction or acceleration. First harness run encountered test-script lexical redeclaration, corrected before full passing rerun; game code untouched. Historical SA-001 evidence preserved.
+
+SA-003 QA registration BEFORE execution. Historical SA001/SA002 preserved.
+Date2026-10-02 independent QA; planned real Edge154 CDP1440x900/800x600.
+SA003-01 AC01/T006,T008: damage + final legitimate shot kill twice, transition100 HUD/bar/color/score, full health stays100. NOT RUN.
+SA003-02 AC02/T006,T008,T011,T012: damaged survivor return/pause/no-transition unchanged; lethal clear delay no resurrection; restart reset. NOT RUN.
+SA003-03 AC03/T004,T005,T007,T018: actual gesture unlock + real analyser nonzero distinct four tones; event mapping including rejection/return. NOT RUN.
+SA003-04 AC04/T012,T018,T020: mute real signal silence/button state/M/unmute/restart preference/singlecontext3 resets/focus+gameover silence/focused-button keys. NOT RUN.
+SA003-05 AC05/T016,T017,T018: unsupported/rejected/suspended fallback live browser, supported audio output, voice cap8 cleanup under sustained firing/no audio network. NOT RUN.
+SA003-06 AC06/core regressions: browser horizontal/formation/sine/aim/return/stage speed/collision/pause/3restarts/viewport/errors; supplemental SA002 checks. NOT RUN.
+T018 now active for SA003; prior historical NOT APPLICABLE refers only sound-free revisions.
+
+Test ID / title: SA003-01
+Implementation ID / acceptance criterion: SA-003 / AC01 / T006,T008
+Build: game.js SHA2567C5FD1F69EE7AF88C118A2D5BD50E3C08520DC256EE6774352080FCBD79891DF; other three hashes matched Programmer log.
+Date / tester: 2026-10-02 / independent QA
+Environment: Windows Edge154.0.4258.48 headless real browser; CDP real keyboard/mouse;1440x900/800x600; live WebAudio AnalyserNode.
+Preconditions: local8765 cache disabled; sound context null before gesture.
+Steps: Two final player-projectile kills in real browser loop with damaged40 health, wait1.1seconds, inspect wave/HUD/bar/color/score
+Expected result: briefs/SA-003.md AC01 / T006,T008 criteria.
+Actual result: Stages2/3 health100, healthy color/bar100%, score200->300 preserved; normal formation/difficulty112/124/136
+Status: PASS
+Evidence: tools/browser-qa-sa003.cjs; qa-evidence/SA-003/browser-report.json; four PNG screenshots; Node tools/check-game.cjs and tools/check-sa003.cjs independentlyPASS.
+Defect: none.
+
+Test ID / title: SA003-02
+Implementation ID / acceptance criterion: SA-003 / AC02 / T006,T008,T011,T012
+Build: game.js SHA2567C5FD1F69EE7AF88C118A2D5BD50E3C08520DC256EE6774352080FCBD79891DF; other three hashes matched Programmer log.
+Date / tester: 2026-10-02 / independent QA
+Environment: Windows Edge154.0.4258.48 headless real browser; CDP real keyboard/mouse;1440x900/800x600; live WebAudio AnalyserNode.
+Preconditions: local8765 cache disabled; sound context null before gesture.
+Steps: Damaged60 survivor return, ordinary frames/pause/resume; damage during genuine empty-fleet clear delay
+Expected result: briefs/SA-003.md AC02 / T006,T008,T011,T012 criteria.
+Actual result: Health60 remains through return/pause; no return sound/removal; lethal delay staysOVER health0 without advancing/refill; restart resets stage1 score0 health100
+Status: PASS
+Evidence: tools/browser-qa-sa003.cjs; qa-evidence/SA-003/browser-report.json; four PNG screenshots; Node tools/check-game.cjs and tools/check-sa003.cjs independentlyPASS.
+Defect: none.
+
+Test ID / title: SA003-03
+Implementation ID / acceptance criterion: SA-003 / AC03 / T004,T005,T007,T018
+Build: game.js SHA2567C5FD1F69EE7AF88C118A2D5BD50E3C08520DC256EE6774352080FCBD79891DF; other three hashes matched Programmer log.
+Date / tester: 2026-10-02 / independent QA
+Environment: Windows Edge154.0.4258.48 headless real browser; CDP real keyboard/mouse;1440x900/800x600; live WebAudio AnalyserNode.
+Preconditions: local8765 cache disabled; sound context null before gesture.
+Steps: Click actual start (no autoplay override), attach live AnalyserNode; four isolated tone fixtures, actual key shot/damage/enemy emission/destruction mapping
+Expected result: briefs/SA-003.md AC03 / T004,T005,T007,T018 criteria.
+Actual result: Context lazily created/running; four tone nonzero peaks playerShot:0.02149, playerHit:0.02693, enemyShot:0.03469, enemyDestroyed:0.02418 with different waveform crossings; actual event output nonzero; rejected hit emits no extra hit; survivor return silent
+Status: PASS
+Evidence: tools/browser-qa-sa003.cjs; qa-evidence/SA-003/browser-report.json; four PNG screenshots; Node tools/check-game.cjs and tools/check-sa003.cjs independentlyPASS.
+Defect: none.
+
+Test ID / title: SA003-04
+Implementation ID / acceptance criterion: SA-003 / AC04 / T012,T018,T020
+Build: game.js SHA2567C5FD1F69EE7AF88C118A2D5BD50E3C08520DC256EE6774352080FCBD79891DF; other three hashes matched Programmer log.
+Date / tester: 2026-10-02 / independent QA
+Environment: Windows Edge154.0.4258.48 headless real browser; CDP real keyboard/mouse;1440x900/800x600; live WebAudio AnalyserNode.
+Preconditions: local8765 cache disabled; sound context null before gesture.
+Steps: Actual sound button and M; sample signal; focused button Space/Enter; focus pause/Enter resume, lethalover,3button/Enter restarts
+Expected result: briefs/SA-003.md AC04 / T012,T018,T020 criteria.
+Actual result: Mute peak0/rms0 and zero voices, accessible pressedfalse; unmute peak0.02149; no accidental reset; pause/over silence; mute preference and same original context through3restarts
+Status: PASS
+Evidence: tools/browser-qa-sa003.cjs; qa-evidence/SA-003/browser-report.json; four PNG screenshots; Node tools/check-game.cjs and tools/check-sa003.cjs independentlyPASS.
+Defect: none.
+
+Test ID / title: SA003-05
+Implementation ID / acceptance criterion: SA-003 / AC05 / T016,T017,T018
+Build: game.js SHA2567C5FD1F69EE7AF88C118A2D5BD50E3C08520DC256EE6774352080FCBD79891DF; other three hashes matched Programmer log.
+Date / tester: 2026-10-02 / independent QA
+Environment: Windows Edge154.0.4258.48 headless real browser; CDP real keyboard/mouse;1440x900/800x600; live WebAudio AnalyserNode.
+Preconditions: local8765 cache disabled; sound context null before gesture.
+Steps: 40tone voice stress and4.2seconds actual held fire; unavailable API fixture, real context suspend + rejected resume and later actual gesture retry
+Expected result: briefs/SA-003.md AC05 / T016,T017,T018 criteria.
+Actual result: Cap8, completed voices0; no missing audio assets/runtime/unhandled errors; unsupported/rejected unlock still plays gameplay; suspended no voices; later resume running and supported live output proven
+Status: PASS
+Evidence: tools/browser-qa-sa003.cjs; qa-evidence/SA-003/browser-report.json; four PNG screenshots; Node tools/check-game.cjs and tools/check-sa003.cjs independentlyPASS.
+Defect: none.
+
+Test ID / title: SA003-06
+Implementation ID / acceptance criterion: SA-003 / AC06 / relevant core cases
+Build: game.js SHA2567C5FD1F69EE7AF88C118A2D5BD50E3C08520DC256EE6774352080FCBD79891DF; other three hashes matched Programmer log.
+Date / tester: 2026-10-02 / independent QA
+Environment: Windows Edge154.0.4258.48 headless real browser; CDP real keyboard/mouse;1440x900/800x600; live WebAudio AnalyserNode.
+Preconditions: local8765 cache disabled; sound context null before gesture.
+Steps: Browser mixed horizontal/fire and ignored vertical, normal6.2second scheduler/hostile activity, scoring/immunity/return/3resets/pause; cache bypass2viewport captures/resize; supplemental SA002 harness
+Expected result: briefs/SA-003.md AC06 / relevant core cases criteria.
+Actual result: Bottom anchor/movement/fire, <=3 sine divers and enemy fire, once-only100 score, immunity, survivor fleet and stage speed preserved;1440x900+800x600 readable sound/HUD/buttons/controls; zero runtime/load errors; both state harnessesPASS
+Status: PASS
+Evidence: tools/browser-qa-sa003.cjs; qa-evidence/SA-003/browser-report.json; four PNG screenshots; Node tools/check-game.cjs and tools/check-sa003.cjs independentlyPASS.
+Defect: none.
+
+SA003 QA limitations: Live analyser proves actual rendered digital waveform, not physical speaker/listening loudness. Fixtures isolate tone/event/refill/death/fallback/voice stress; actual gestures, keys, native focused buttons, scheduler/render/audio graph execute in Edge. Earlier harness native Enter omitted text carriage-return; corrected CDP input then full rerunPASS; no implementation defect. Historical prior audio NOT APPLICABLE preserved.

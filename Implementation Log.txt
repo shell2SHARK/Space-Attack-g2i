@@ -25,3 +25,119 @@ Defects / QA -> Producer handoff:
 Repair cycles / changes / retest evidence:
 Final QA verdict / delivery summary / limitations:
 
+
+SA-001 / Modern Space Attack browser game
+User request: Create lightweight modern browser game inspired by supplied screenshot; keyboard movement/fire with instructions, waves, collisions, score/health, increasing difficulty, start/game over/restart.
+Producer brief: briefs/SA-001.md (AC01-AC10; T001-T008,T010-T014,T016-T017,T020). Desktop endless vertical shooter, procedural graphics, health-based survival; no external assets required.
+Status: SPECIFIED
+Producer -> Programmer handoff: Read Rules.txt and Programmer skill, implement briefs/SA-001.md in project D:/Downloads/TRABALHO/BLUESPOT DS/Space Attack G2i; record changed files, mechanics, checks, snapshot and limitations; hand off to QA. Prior scaffold SETUP-001 only. File access recovered using absolute PowerShell executable and authorized execution path.
+Programmer changes / files / checks / build identity: PENDING
+Programmer -> QA handoff: PENDING
+QA cases / results / evidence: PENDING; QA owns Test List.txt and must execute required cases before declaring READY.
+Defects / QA -> Producer handoff: None yet.
+Repair cycles / changes / retest evidence: None yet.
+Final QA verdict / delivery summary / limitations: PENDING
+
+SA-001 / Programmer implementation handoff
+Status: QA (awaiting independent Tester verdict)
+Programmer skill: .agents/skills/space-attack-programmer/SKILL.md applied after reading Rules.txt and full brief.
+Files added: index.html, styles.css, game.js, README.md, tools/check-game.cjs.
+Behavior: procedural Canvas starfield/neon ships, responsive HUD, ready/play/pause/game-over states, WASD/arrows normalized movement, Space hold firing, Enter/button start/restart/resume, P pause, blur/hidden pause with input cleared. One requestAnimationFrame loop and one set of input handlers. Cleanup removes spent bullets/particles and escaped enemies.
+Mechanics: 100 points per enemy; 20 damage per hostile bullet/contact; 1.1-second invulnerability; health clamped 0-100. Shots fire every 0.15 seconds. Wave enemy count min(24,7+wave*2), speed min(85,22+wave*5), base firing interval max(0.45,1.7-wave*0.09); projectile speed increases to a cap of 240. Waves advance 0.9 seconds after enemy cleanup.
+Checks executed: Node --check game.js exited 0. Node tools/check-game.cjs PASS: ready/start, simultaneous movement/firing cadence, single destruction score, damage/invulnerability/death, three clean resets, wave difficulty, pause/resume, bounds and enemy escape. These are mocked state checks and do not replace browser QA.
+Build identity SHA256:
+index.html 4F86E358978C1EBF38982C6465213BDC019BE1D9625D5F2AE1D3E2028149DFFE
+styles.css FE736DBD8DF2376E77DBB8A36708AF128493CE166A96578521A701EBBDB3759D
+game.js 35799668AB3FA8B160635C435CBA90D2153EDAF8E1A6B78A4AA5308DFFD8ACB7
+README.md 63F387F1380160538A4FAA5246364C1B5C651ED0801184E85BA6077CB2701650
+Run: open index.html directly or use local server http://127.0.0.1:8765 (Python server started hidden, PID 23500; HTTP GET returned 200). Server diagnostics: server-output.log/server-error.log.
+Programmer -> QA: Test briefs/SA-001.md AC01-AC10 and associated checklist; document browser/version and 1440x900 + 800x600 visual evidence, actual keyboard/fire/collision/damage/wave progression to >=3, focus pause, repeated restart, entity cleanup and missing asset/runtime error checks. Runtime window.spaceAttack.snapshot() returns inspectable state and difficulty; tools/check-game.cjs can supplement browser evidence. QA owns Test List.txt and readiness status. Parent coordinator receives this full handoff.
+Known limitations: desktop keyboard only; no touch/audio; procedural visuals require Canvas support. Independent browser checks remain pending.
+
+SA-001 / Independent QA final handoff
+Status: READY
+QA: Rules/skill/brief/prior handoff read; cases registered before execution. Identical four SHA256 file hashes verified.
+Environment: Windows Edge154.0.4258.48 headless real browser at1440x900 and800x600, CDP mouse/key events. CUA unavailable due sandbox kernel; actual Edge route worked.
+Evidence: qa-evidence/browser-report.json; eight screenshots; tools/browser-qa.cjs executed successfully; Node tools/check-game.cjs independently rerun PASS.
+Results: AC01-AC10 PASS; required T001-T008,T010-T014,T016-T017,T020 PASS; T009,T015,T018,T019 NOT APPLICABLE. Real input/fire/motion, deterministic browser collisions/scoring/damage/immunity, blur pause/resume, gameover freeze, three clean button/Enter restarts, resize and visual checks pass. Zero runtime/loading errors. Extended50second session reached natural wave3; entity counts shots4/hostile11/particles0.
+Defects / QA -> Producer: None.
+Final verdict: READY for local desktop delivery. Controls WASD/arrows, Space fire, Enter start/restart/resume, P pause. Open index.html or http://127.0.0.1:8765.
+Limitations: Desktop keyboard only; Edge tested; no audio/touch. Explicit fixtures isolate collision/death/escape; extended session protects player but preserves original timing. No external deployment performed.
+
+SA-002 / Formation fleet and sine-wave dives
+User request: Preserve graphics; enemies stay in top formation then individually dive downward in a sine-wave pattern while shooting at player; player moves left/right only at bottom; each stage increases enemy movement speed.
+Producer brief: briefs/SA-002.md (AC01-AC08; T002-T008,T010-T014,T016-T017,T020). Stage equals wave. Staggered bounded concurrent individual divers return to home slots if they survive; stage clears only on all enemy destruction. Aimed straight bullets target player at emission. Bottom player anchor; truthful controls. Strictly increasing stage dive speed.
+Status: SPECIFIED
+Producer -> Programmer handoff: Read Rules.txt and Programmer skill; implement SA-002 brief in existing local game; preserve visual design and SA-001 health/scoring/state controls, update stale movement/escape harness expectations; record mechanics, changes/checks/hash snapshot, then hand off to QA. Prior implementation SA-001 READY with Edge browser evidence and local server8765.
+Programmer changes / files / checks / build identity: PENDING
+Programmer -> QA handoff: PENDING
+QA cases / results / evidence: PENDING; register revision cases before testing, retain SA-001 history; QA owns Test List.txt.
+Defects / QA -> Producer handoff: None yet.
+Repair cycles / changes / retest evidence: None yet.
+Final QA verdict / delivery summary / limitations: PENDING
+
+SA-002 / Programmer implementation handoff
+Status: QA (independent Tester verdict pending)
+Read Rules.txt in full, Programmer skill, briefs/SA-002.md, implementation history and test history before revision.
+Changed files: game.js; index.html; README.md; tools/check-game.cjs. styles.css unchanged, preserving modern visual design. No QA records or browser harness edited.
+Mechanics: Player Y fixed at h-85 on start/update/resize; horizontal A/D/Left/Right moves at300 pixels/second without vertical-key normalization. W/S/Up/Down cannot affect Y or horizontal speed. Existing fire/damage/health/score and state controls preserved.
+Formation: up to8 columns, left/right margins80, homeY120 + row*48; up to24 enemies. Formation remains stationary below HUD. Resize recomputes home slots and diver position from normalized progress; player returns to new bottom baseline; live hostile X clamps to width.
+Dives: First departure after1.3 seconds; departure cadence0.85 seconds while slots/concurrency permit; max3 concurrent divers. Round-robin nextSlot selects the next eligible surviving home occupant and wraps through all slot IDs. Each diver descends at100+12*stage pixels/second (stage1=112,2=124,3=136,20=340,21=352; no speed cap). Vertical progress normalized from homeY through h+25; X=homeX+sin(progress*3*pi)*amplitude, amplitude=min(75,homeX-20,width-20-homeX), giving1.5 cycles per dive. Surviving diver at progress>=1 resets to home, progress0, formation mode and fire0.35; return preserves count/score and generates no shot/damage.
+Aimed fire: Divers first fire after0.35 seconds, then existing stage fire interval plus up to0.6-second jitter; direction atan2(playerY-enemyY,playerX-enemyX) at emission, then straight fixed velocity. No formation fire or shots after y>=h. Existing bullet/particle cleanup and health immunity preserved. Only destroyed enemies are removed; only an empty destroyed fleet advances stage after0.9 seconds. Restart resets diveTimer/nextSlot through spawnWave. Paused update returns without progressing any timer or motion.
+Checks: Node --check game.js exit0. Node tools/check-game.cjs PASS after updating stale fixtures: horizontal/vertical input independence, movement+fire, single-score collision, health/immunity/death, three resets, wave scaling including20->21, pause freeze/resume, bounds, all9 slots eventually diving in80-second simulation, max3 concurrent, survivor return with enemy count/wave/score unchanged, aimed bullet vector cross/dot checks. These are mocked state checks; independent browser checks remain required.
+Build SHA256:
+index.html D829BE9DCD7BE231B69AA4955D6F883B49D61DEFBACA46C78B9499BC305222A2
+styles.css FE736DBD8DF2376E77DBB8A36708AF128493CE166A96578521A701EBBDB3759D
+game.js 7D91C284A1FBBB8BDCC793E422DD1DD4E0B48AB8C6F43069550BC5379C977FBB
+README.md 9AEF6CB53C907665FAE382193A1EC692786081DBA23BFC23929023AEAFFBF7E5
+Programmer -> QA: Use local http://127.0.0.1:8765 or direct index.html, reload for revision. Execute SA-002 AC01-AC08 and related regressions; inspect1440x900/800x600 formation/HUD/bottom player, real horizontal and ignored vertical input, normal scheduler/dive/bullet travel/return/stage destruction, stage3 endurance and late-stage speed, pause/resets/error checks. Existing tools/browser-qa.cjs is historical SA-001 and contains stale vertical/escape fixtures; QA should adapt a new harness while retaining prior evidence. window.spaceAttack.snapshot() additionally reports divers/diveTimer/nextSlot; enemy objects expose slot/homeX/homeY/mode/progress. No release-ready claim made.
+Known limitations: Stationary formation is intentional; return is instantaneous home reset as allowed by brief. Desktop keyboard only; no audio/touch. Infinite stages imply uncapped dive speed, so very late stages are intentionally increasingly demanding.
+
+SA-002 / Independent QA final handoff
+Status: READY
+QA reread full Rules/skill/brief/handoff/history; registered SA002-01 through08 before execution; four build hashes independently matched.
+Environment: Edge154.0.4258.48 real headless browser CDP keyboard/mouse,1440x900 and800x600, local server8765 cache bypass.
+Results: AC01-AC08 PASS. Bottom horizontal controls/vertical mixing, stable top formation, all9 scheduler slots, max3 concurrency, sine excursions, aimed shots+travel, actual damage/immunity/contact/scoring, survivor returns preserving fleet, natural stage1->3, uncapped speeds, focus pause/timer freeze,3clean restarts and resize/visual checks pass. Runtime/loading errors0. Node state harness independently PASS.
+Evidence: qa-evidence/SA-002/browser-report.json; separate screenshots; tools/browser-qa-sa002.cjs; detailed Test List.txt records. Natural extended duration17066ms reached stage3; max hostile4 shots5.
+Defects / QA -> Producer: None. Test-harness lexical redeclaration corrected; full rerun PASS; no implementation edit needed.
+Final QA verdict: READY for local desktop delivery. Open index.html or http://127.0.0.1:8765 (refresh). A/D or left/right moves; Space fires; Enter start/restart/resume; P pauses.
+Limitations: Edge desktop only; no audio/touch. Protection and isolated collision fixtures declared; natural stage progression preserved normal scheduling/time and used real key auto-aim. Historical SA-001 retained; no external deployment.
+
+SA-003 / Stage health refill and arcade sound effects
+User request: Refresh player life when passing stage; simple audio for player and enemy.
+Producer brief: briefs/SA-003.md (AC01-AC06; T002-T008,T010-T014,T016-T018,T020). Full health100 only on legitimate next-stage transition; procedural distinct player-shot/player-hit/enemy-shot/enemy-destroy effects, gesture-unlocked WebAudio and compact mute control. Preserve SA-002 design/mechanics.
+Status: SPECIFIED
+Producer -> Programmer handoff: Read Rules.txt and Programmer skill, implement brief; document sound values/unlock/fallback/voice cleanup and health transition edge cases; record checks/hash snapshot and hand off to QA. Prior SA-002 READY, real Edge/CDP evidence, server8765/CDP9223 available.
+Programmer changes / files / checks / build identity: PENDING
+Programmer -> QA handoff: PENDING
+QA cases / results / evidence: PENDING; register SA-003 cases first, activate T018 coverage while retaining history; require actual browser audio signal evidence alongside event checks. QA owns Test List.txt.
+Defects / QA -> Producer handoff: None yet.
+Repair cycles / changes / retest evidence: None yet.
+Final QA verdict / delivery summary / limitations: PENDING
+
+SA-003 / Programmer implementation handoff
+Status: QA (independent verdict pending)
+Rules.txt reread fully, Programmer skill, brief, logs/tests/current source read before changes.
+Changed files: game.js, index.html, styles.css, README.md, tools/check-game.cjs (mock attribute support), tools/check-sa003.cjs (new supplemental checks). QA records and browser harnesses untouched.
+Health: Existing legitimate empty-fleet transition at >0.9seconds now restores100 alongside wave increment, before spawnWave refreshes HUD. Preserves score, normal formation and speed. No immunity change. No refill on ordinary frame, survivor return or pause. PLAYING guard prevents lethal clear-delay revival; restart remains initial reset.
+Audio: One lazy ArcadeSound context/master created on start/restart/resume/unmute gesture, no page-load context. State-running-only emission; suspended resume Promise errors caught and retryable on later gesture; unsupported/constructor failures silently disable audio. No audio network/assets. Master gain0.22; max8 concurrent voices; oldest is stopped/disconnected if bound reached. Every oscillator uses4ms attack, exponential decay to0.0001, stops10ms after duration, onended disconnects oscillator/gain and removes voice. No audio timers or per-restart handlers/context creation.
+Tone definitions (frequency Hz start->end, duration seconds, peak voice gain): playerShot square900->260/0.07/0.10; playerHit sawtooth140->45/0.18/0.14; enemyShot triangle300->620/0.10/0.16; enemyDestroyed sawtooth480->55/0.24/0.12. Sounds invoked at actual projectile creation, accepted health subtraction and destruction; invulnerability rejections/returns emit none. Contact destruction keeps existing scoring behavior. Lethal hit immediately stops voices as documented.
+Controls: Accessible SOUND ON/OFF button with aria-pressed/explicit action label; M shortcut. Muting zeros master gain and stops/disconnects voices; preference persists restart. Unmute gesture unlocks subsequent effects. Pause/focus/gameover stop voices. Focused buttons retain native Space/Enter semantics and don't reach global mission shortcuts. Action-button clicks are ignored while PLAYING, preventing accidental reset. Minor masthead button CSS only; game graphics preserved.
+Checks: Node --check game.js exit0; tools/check-game.cjs PASS full SA002 supplemental regressions; tools/check-sa003.cjs PASS genuine stage refill/HUD/score, no return/pause refill, lethal delay no resurrection, event mapping, lazy single-context3resets, voice max8/onended cleanup, mute persistence/unmute/pause silence, unsupported/rejected unlock fallback. These checks mock audio; no audibility claim.
+Build SHA256:
+index.html 2B4B71697AD34545845F45CF696A2E2CE9E5A5B382BA7A714B21722F586198D9
+styles.css 74E72466D553C7F596398A2337B982CD40ACC8A11A219AB5AF3A9165DD5A4011
+game.js 7C5FD1F69EE7AF88C118A2D5BD50E3C08520DC256EE6774352080FCBD79891DF
+README.md CEC0F4EC553C585C252A271896909A40869C76D77A66DE5EE287615EA0AAFABE
+Programmer -> QA: Refresh/cache-bypass http://127.0.0.1:8765 or direct index.html. Register and execute SA003 AC01-AC06 with relevant SA002 regressions and viewport checks. Audio inspection: window.spaceAttack.sound.context/master/effects/voices expose actual live graph and definitions; attach a real AnalyserNode to sound.master (already connected to destination) and sample time-domain signal during events, then muted signal. Supported running context and rendered signal must be verified by QA; merely checking play calls is insufficient. May offline-render the identical tone schedule for supplemental distinctness; declare fixtures. Check actual gesture unlock, silent mute/unmute, onecontext3resets/cleanup, rejected/unsupported fallbacks, pause/focus/over and focused-button key behavior. Health repeat transitions and lethal delay edge required. Prior tools/browser-qa-sa002.cjs remains available historical harness.
+Known limitations: Browser/device autoplay policies can block sound until accepted user gesture; gameplay continues silently. No music or touch. Independent browser/audio signal verification remains pending; no READY claim.
+
+SA-003 / Independent QA final handoff
+Status: READY
+Full Rules/QA skill/brief/handoff/history read; six AC-linked cases registered before execution. Four SHA256 hashes independently matched.
+Environment: Edge154.0.4258.48 real headless browser CDP actual gestures,1440x900/800x600; supported live WebAudio, no autoplay overrides.
+Results: AC01-AC06 PASS. Two genuine final-shot stage transitions restore100 and correct HUD while preserving score; return/pause/non-transition don't refill; lethal clear delay no revival. Four actual live tone peaks0.02149/0.02693/0.03469/0.02418; mapped shot/hit/enemy emission/destruction rendered nonzero. Muted signal peak/rms0, unmute nonzero; onecontext3resets, voice cap8/cleanup, pause/over silence, native-button keys, fallback missingAPI/rejected+suspended resume+later retryPASS. Core gameplay/browser/regression checksPASS, no runtime/loading errors.
+Evidence: qa-evidence/SA-003/browser-report.json and4screenshots, tools/browser-qa-sa003.cjs; Test List.txt detailed records; independent check-game/check-sa003 PASS.
+Defects / QA -> Producer: None. Test-harness native key text corrected before full passing run; game unchanged.
+Final verdict: READY for local desktop delivery. Refresh http://127.0.0.1:8765 or open index.html. Clearing each stage restores full hull; SOUND button/M toggles procedural effects.
+Limitations: Digital live WebAudio signal verified; physical speaker output and subjective loudness not listened to. Edge desktop only; explicit deterministic fixtures as recorded. Historical records retained; no external deployment.

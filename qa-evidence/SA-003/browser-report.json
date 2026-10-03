@@ -1,0 +1,124 @@
+{
+  "implementation": "SA-003",
+  "browser": "Edg/154.0.4258.48",
+  "viewports": [
+    "1440x900",
+    "800x600"
+  ],
+  "status": "PASS",
+  "errors": [],
+  "tones": {
+    "playerShot": {
+      "peak": 0.021491944789886475,
+      "rms": 0.0069266150762444375,
+      "zeroCrossings": 31
+    },
+    "playerHit": {
+      "peak": 0.026925722137093544,
+      "rms": 0.008543411511264499,
+      "zeroCrossings": 9
+    },
+    "enemyShot": {
+      "peak": 0.03469301387667656,
+      "rms": 0.00872817178554536,
+      "zeroCrossings": 27
+    },
+    "enemyDestroyed": {
+      "peak": 0.024176795035600662,
+      "rms": 0.007543392327299703,
+      "zeroCrossings": 26
+    }
+  },
+  "eventSignals": {
+    "shotSignal": {
+      "peak": 0.021491944789886475,
+      "rms": 0.006998651888694161,
+      "zeroCrossings": 51
+    },
+    "hitSignal": {
+      "peak": 0.02721852995455265,
+      "rms": 0.008356588483077704,
+      "zeroCrossings": 19
+    },
+    "enemySignal": {
+      "peak": 0.037818294018507004,
+      "rms": 0.009013980829189212,
+      "zeroCrossings": 22
+    },
+    "destroyedSignal": {
+      "peak": 0.024202924221754074,
+      "rms": 0.007421166202544191,
+      "zeroCrossings": 39
+    }
+  },
+  "mutedSignal": {
+    "peak": 0,
+    "rms": 0,
+    "zeroCrossings": 0
+  },
+  "unmuteSignal": {
+    "peak": 0.021491944789886475,
+    "rms": 0.006998651888694161,
+    "zeroCrossings": 51
+  },
+  "transitions": [
+    {
+      "state": "playing",
+      "score": 200,
+      "wave": 2,
+      "health": 100,
+      "player": {
+        "x": 575,
+        "y": 668,
+        "r": 14
+      },
+      "enemies": 11,
+      "divers": 0,
+      "diveTimer": 1.1166999999999996,
+      "nextSlot": 0,
+      "shots": 0,
+      "hostile": 0,
+      "particles": 0,
+      "difficulty": {
+        "count": 11,
+        "speed": 124,
+        "fireInterval": 1.52,
+        "diveInterval": 0.85,
+        "maxDivers": 3
+      }
+    },
+    {
+      "state": "playing",
+      "score": 300,
+      "wave": 3,
+      "health": 100,
+      "player": {
+        "x": 575,
+        "y": 668,
+        "r": 14
+      },
+      "enemies": 13,
+      "divers": 0,
+      "diveTimer": 1.0833999999999997,
+      "nextSlot": 0,
+      "shots": 0,
+      "hostile": 0,
+      "particles": 0,
+      "difficulty": {
+        "count": 13,
+        "speed": 136,
+        "fireInterval": 1.43,
+        "diveInterval": 0.85,
+        "maxDivers": 3
+      }
+    }
+  ],
+  "voiceCap": 8,
+  "contextReuseRestarts": 3,
+  "fallback": [
+    "missing AudioContext",
+    "real suspended context with rejected resume",
+    "successful later gesture retry"
+  ],
+  "limitations": "Headless live WebAudio AnalyserNode measurements verify rendered digital signal; physical speaker/loudness listening not tested. Fixtures isolate collision, refill, death, fallback, voice stress; normal scheduler browser observation and supplemental core regressions retained."
+}
