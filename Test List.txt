@@ -1,0 +1,44 @@
+SPACE ATTACK WEB - TEST LIST
+
+No game exists yet. All gameplay cases below are NOT IMPLEMENTED.
+These are candidate coverage areas, not approved requirements. Producer defines
+the expected behavior when each mechanic is requested. QA adds cases for every
+new feature before testing, and retains prior results in implementation records.
+
+PLANNED GAMEPLAY COVERAGE
+T001 | Load/start game and enter playable state | NOT IMPLEMENTED
+T002 | Move player using supported controls | NOT IMPLEMENTED
+T003 | Keep player within playfield boundaries | NOT IMPLEMENTED
+T004 | Shoot; verify direction, cadence, and simultaneous movement | NOT IMPLEMENTED
+T005 | Projectile hits enemy; resolve collision once | NOT IMPLEMENTED
+T006 | Enemy movement, spawning, and wave progression | NOT IMPLEMENTED
+T007 | Enemy attacks or collisions damage player as specified | NOT IMPLEMENTED
+T008 | Health/energy display matches damage and limits | NOT IMPLEMENTED
+T009 | Lives, death, and respawn behave as specified | NOT IMPLEMENTED
+T010 | Score changes correctly; HUD remains synchronized | NOT IMPLEMENTED
+T011 | Game over stops gameplay; restart resets session state | NOT IMPLEMENTED
+T012 | Pause/resume and loss of focus behave as specified | NOT IMPLEMENTED
+T013 | Keyboard input does not unintentionally scroll the page | NOT IMPLEMENTED
+T014 | Supported viewport sizes keep controls/HUD usable | NOT IMPLEMENTED
+T015 | Touch controls, if requested, support movement and shooting | NOT IMPLEMENTED
+T016 | Supported browsers load and play without runtime errors | NOT IMPLEMENTED
+T017 | Gameplay remains responsive under expected enemy/projectile load | NOT IMPLEMENTED
+T018 | Audio/mute settings, if requested, behave as specified | NOT IMPLEMENTED
+T019 | Win condition, if requested, completes correctly | NOT IMPLEMENTED
+T020 | Repeated restarts do not duplicate input handlers or entities | NOT IMPLEMENTED
+
+TEST RECORD FORMAT (append a record for each executed case)
+Test ID / title:
+Implementation ID / acceptance criterion:
+Build, revision, or identifiable file snapshot:
+Date / tester:
+Environment (browser, version, viewport, input method):
+Preconditions:
+Steps:
+Expected result:
+Actual result:
+Status (NOT IMPLEMENTED / NOT RUN / PASS / FAIL / BLOCKED / NOT APPLICABLE):
+Evidence (command output, screenshot path, or observed behavior):
+Defect ID / severity / regression impact (if applicable):
+Retest result and evidence (if applicable):
+
