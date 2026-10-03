@@ -2,7 +2,7 @@
 
 A standalone browser arcade shooter with procedural neon ships, a starfield, enemy waves, and hull health. No packages, downloaded assets, or network connection are required.
 
-Open `index.html` directly in a modern desktop browser. Alternatively, run `python -m http.server 8765` in this folder and open http://localhost:8765.
+Open `game/index.html` directly in a modern desktop browser. Alternatively, run `python -m http.server 8765` in this folder and open http://localhost:8765/game/.
 
 - **A/D / Left and Right arrows:** move horizontally along the bottom. Vertical keys have no effect.
 - **Hold Space:** fire (one shot every 0.15 seconds).

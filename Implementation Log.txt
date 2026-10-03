@@ -141,3 +141,16 @@ Evidence: qa-evidence/SA-003/browser-report.json and4screenshots, tools/browser-
 Defects / QA -> Producer: None. Test-harness native key text corrected before full passing run; game unchanged.
 Final verdict: READY for local desktop delivery. Refresh http://127.0.0.1:8765 or open index.html. Clearing each stage restores full hull; SOUND button/M toggles procedural effects.
 Limitations: Digital live WebAudio signal verified; physical speaker output and subjective loudness not listened to. Edge desktop only; explicit deterministic fixtures as recorded. Historical records retained; no external deployment.
+
+PACKAGE-001 / Website upload ZIP
+Request: Prepare game ZIP for upload to user's site.
+Scope: Packaging only; no implementation changes. Latest SA-003 QA READY runtime hashes matched.
+Artifact: Space-Attack-upload.zip; root entries index.html, styles.css, game.js. No external runtime assets required.
+Verification: All three archived entries SHA256 match source files; entry count and root layout verified. Prior QA verdict retained; no new gameplay test or external deployment claimed.
+Status: Package created and archive integrity verified.
+
+
+STRUCTURE-001 / Organize game files
+Request: Put the game files in a folder.
+Scope: File organization only; moved index.html, styles.css, game.js into game/. Updated README run paths and tools source/browser paths. Historical briefs and QA evidence retained.
+Validation: All three runtime SHA256 hashes unchanged after move; HTML relative asset paths remain valid. Current game URL when serving project root: http://localhost:8765/game/. Prior SA-003 QA verdict applies to unchanged runtime; no new gameplay implementation.

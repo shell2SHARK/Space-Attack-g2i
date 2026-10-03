@@ -1,7 +1,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const elements=new Map();const element=id=>{if(!elements.has(id))elements.set(id,{textContent:'',style:{},classList:{add(){},remove(){}},addEventListener(){},setAttribute(){}});return elements.get(id);};
 const canvas={getContext:()=>({setTransform(){}}),getBoundingClientRect:()=>({width:1100,height:700})};elements.set('game',canvas);
-const context={window:{devicePixelRatio:1,addEventListener(){}},document:{getElementById:element,addEventListener(){}},performance:{now:()=>0},requestAnimationFrame(){},Math,Set};vm.createContext(context);vm.runInContext(fs.readFileSync('game.js','utf8'),context);const g=context.window.spaceAttack;
+const context={window:{devicePixelRatio:1,addEventListener(){}},document:{getElementById:element,addEventListener(){}},performance:{now:()=>0},requestAnimationFrame(){},Math,Set};vm.createContext(context);vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'..','game','game.js'),'utf8'),context);const g=context.window.spaceAttack;
 assert.equal(g.state,'ready');g.start();assert.equal(g.enemies.length,9);assert.equal(g.health,100);
 g.keys.add('d');g.keys.add(' ');for(let i=0;i<25;i++)g.update(.04);assert(g.player.x>550);assert(g.shots.length<=7);assert(g.shots.length>=5);
 g.keys.clear();g.score=0;g.enemies=[{x:500,y:200,r:16,fire:99,phase:0,color:'#fff'}];g.shots=[{x:500,y:200,r:4},{x:500,y:200,r:4}];g.update(0);assert.equal(g.score,100);assert.equal(g.enemies.length,0);
